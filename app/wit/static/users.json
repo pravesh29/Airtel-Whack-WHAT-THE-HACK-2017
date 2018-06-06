@@ -1,0 +1,48 @@
+{
+  "123456789" : {
+    "user" : "Mahak Gupta",
+    "type_customer" : "postpaid",
+    "plan_details": "999 per month",
+    "last_month_billing": {
+      "bill_amount" : 1343.54,
+      "roaming": "False",
+      "data_exhaust":"False",
+      "subscribed": "True"
+    },
+    "data_details":{
+      "network_services_available": "3G",
+      "megabytes_available": 1596,
+      "network_services_subscribed": "4G"
+    }
+  },
+  "234567891" : {
+    "user" : "Moritz Herrman",
+    "type_customer" : "prepaid",
+    "last_month_billing": {
+      "roaming": "False",
+      "data_exhaust":"False",
+      "subscribed": "False"
+    },
+    "data_details":{
+      "network_services_available": "4G",
+      "megabytes_available": 0,
+      "network_services_subscribed": "4G"
+    }
+  },
+  "345678912" : {
+    "user" : "Roman Klinger",
+    "type_customer" : "postpaid",
+    "plan_details": "999 per month",
+    "last_month_billing": {
+      "bill_amount" : 3117.54,
+      "roaming": "True",
+      "data_exhaust":"False",
+      "subscribed": "False"
+    },
+    "data_details":{
+      "network_services_available": "4G",
+      "megabytes_available": 159123,
+      "network_services_subscribed": "4G"
+    }
+  }
+}

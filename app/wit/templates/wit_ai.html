@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Machine learning</title>
+    <style>
+        body {
+  font: 15px arial, sans-serif;
+  background-color: #d9d9d9;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#bodybox {
+  margin: auto;
+  max-width: 550px;
+  font: 15px arial, sans-serif;
+  background-color: white;
+  border-style: solid;
+  border-width: 1px;
+  padding-top: 20px;
+  padding-bottom: 25px;
+  padding-right: 25px;
+  padding-left: 25px;
+  box-shadow: 5px 5px 5px grey;
+  border-radius: 15px;
+}
+
+#chatborder {
+  border-style: solid;
+  background-color: #f6f9f6;
+  border-width: 3px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  padding-right: 20px;
+  padding-left: 15px;
+  border-radius: 15px;
+}
+
+.chatlog {
+   font: 15px arial, sans-serif;
+}
+
+#chatbox {
+  font: 17px arial, sans-serif;
+  height: 22px;
+  width: 100%;
+}
+
+h1 {
+  margin: auto;
+}
+
+pre {
+  background-color: #f0f0f0;
+  margin-left: 20px;
+}
+.w3-border {
+    border: 1px solid #ccc!important;
+}
+
+.w3-input {
+    padding: 8px;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+}
+.w3-btn, .w3-btn:link, .w3-btn:visited {
+    color: #FFFFFF;
+    background-color: #4CAF50;
+}
+w3.css
+.w3-teal, .w3-hover-teal:hover {
+    color: #fff!important;
+    background-color: #009688!important;
+}
+w3.css
+.w3-padding {
+    padding: 8px 16px!important;
+}
+        #hide {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+}
+
+    </style>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+            $('#emit_data').val('').focus();
+            $('#hide').hide();
+
+
+            namespace = '/wit';
+            var msgCount = 1;
+
+            var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+
+            socket.on('response', function(msg) {
+                $('#hide').hide();
+                $('#log').append('<br>' + $('<div/>').html('<div class=chatlog><b>Chatbot #' + msgCount + ' </b>: ' + msg.data + '</div>').html());
+                msgCount += 1;
+
+                $('#emit_data').val('').focus();
+
+            });
+            $('form#emit').submit(function(event) {
+                $('#hide').show();
+                socket.emit('message', {data: $('#emit_data').val()});
+                $('#log').append('<br>' + $('<div/>').html('<div class=chatlog><b>You #' + msgCount + ': </b>' + $('#emit_data').val() + '</div>').html());
+                msgCount += 1;
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="bodybox">
+    <h1>Airtel What the Hack - Chatbot Demo</h1>
+    <ul>
+        <li>The motivation of conversation stories is from latest tweets on <a href="https://twitter.com/airtel_presence" target="_blank">@airtel_presence</a> page (what people have been talking most in past 20 days). <br/></li>
+        <li>Brief Documentation on conversation stories are <a href="{{ url_for('static', filename='readme.txt') }}" target="_blank">here</a> </li>
+        <li>The chatbot is trained only to work with only a few stories... Some of them are (others available in Documentation above): <br/></li>
+
+
+        <ul>
+          <li>  <a href="{{ url_for('static', filename='billing_charge.png') }}" target="_blank">Billing Charge</a><br/>
+          <li><a href="{{ url_for('static', filename='data_not_working.png') }}" target="_blank">Data not working</a><br/>
+          <li><a href="{{ url_for('static', filename='find_bill.png') }}" target="_blank">Find Bill</a><br/>
+          <li><a href="{{ url_for('static', filename='mnp.png') }}" target="_blank">MNP</a> & <a href="{{ url_for('static', filename='mnp_leave.png') }}" target="_blank">MNP leave</a><br/>
+        </ul>
+        <li>The sample Users.json file used is <a href="{{ url_for('static', filename='users.json') }}" target="_blank">here</a> </li>
+    </ul>
+    <form id="emit" method="POST" action='#'>
+        <div id="chatborder">
+          <h2>Start a story with our Chatbot:</h2>
+            <div id="log"></div>
+
+
+
+            <div id="hide">
+            <img src="{{ url_for('static', filename='loading_spinner.gif') }}" width="100" height="100" />            </div>
+            <!--<textarea name="emit_data" id="emit_data" placeholder="Message"></textarea>-->
+        <input type="text" class="w3-input" name="emit_data" id="emit_data" placeholder="Message" style="margin-top:30px">
+
+
+        <input type="submit" class="w3-btn w3-padding w3-teal" style="width:120px; margin-top:20px" value="Send">
+          </div>
+
+    </form>
+</div>
+</body>
+</html>
+
